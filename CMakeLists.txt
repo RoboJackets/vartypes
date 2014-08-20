@@ -1,9 +1,5 @@
 project(vartypes)
-cmake_minimum_required(VERSION 2.4)
-
-find_package(Qt4 REQUIRED)
-
-include(${QT_USE_FILE})
+cmake_minimum_required(VERSION 2.8.9)
 
 include_directories(${src_dir}/vartypes)
 include_directories(${src_dir}/vartypes/primitives)
@@ -12,6 +8,18 @@ include_directories(${src_dir}/vartypes/gui)
 include_directories(${src_dir}/vartypes/xml)
 
 set(src_dir .)
+
+
+# Qt 5
+# TODO: remove this and include a FindQt5.cmake module
+if(APPLE)
+  set(CMAKE_PREFIX_PATH "/usr/local/Cellar/qt5/5.2.1/lib/cmake/Qt5Widgets")
+endif()
+
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+find_package(Qt5Widgets REQUIRED)
+
 
 set(SRCS
   ${src_dir}/vartypes/VarBase64.cpp
@@ -113,13 +121,6 @@ set (RC
   ${src_dir}/vartypes/gui/icons/icons.qrc
 )
 
-qt4_wrap_cpp (MOC_SRCS
-  ${HEADERS}
-)
-
-qt4_add_resources(RC_SRCS 
-  ${RC}
-)
 
 if(NOT MSVC)
   #flags to set in debug mode
@@ -130,18 +131,17 @@ if(NOT MSVC)
   set (CMAKE_CXX_FLAGS_RELEASE "-DNDEBUG -O3")
 endif()
 
-set (libs ${QT_LIBRARIES})
-
 
 set(CMAKE_DEBUG_POSTFIX d)
-SET(CMAKE_INSTALL_LIBDIR lib CACHE PATH "Output directory for libraries")
-SET(CMAKE_INSTALL_INCLUDEDIR include CACHE PATH "Output directory for header files")
-SET(CMAKE_INSTALL_DOCDIR share/doc CACHE PATH "Output directory for documentation and license files")
+set(CMAKE_INSTALL_LIBDIR lib CACHE PATH "Output directory for libraries")
+set(CMAKE_INSTALL_INCLUDEDIR include CACHE PATH "Output directory for header files")
+set(CMAKE_INSTALL_DOCDIR share/doc CACHE PATH "Output directory for documentation and license files")
 
 set (target vartypes)
-add_library(${target} SHARED ${MOC_SRCS} ${SRCS} ${RC_SRCS})
+add_library(${target} SHARED ${HEADERS} ${SRCS} ${RC_SRCS})
 set_target_properties(${target} PROPERTIES VERSION 0.7.0 SOVERSION 1)
 target_link_libraries(${target} ${libs})
+qt5_use_modules(${target} Widgets)
 
 install(FILES ${INSTALLABLE_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/vartypes)
 
@@ -176,8 +176,8 @@ set(CPACK_RESOURCE_FILE_README "${CMAKE_BINARY_DIR}/README.txt")
 set(CPACK_PACKAGE_VERSION "0.7.0")
 set(CPACK_OUTPUT_FILE_PREFIX ${PROJECT_SOURCE_DIR}/dist)
 # Debian specific
-#TODO: find out what components of qt are required, list them here:
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt4-core")
+# #TODO: find out what components of qt are required, list them here:
+# set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt4-core")
 set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}_${CPACK_PACKAGE_VERSION}-${FLAVOR}_${ARCH}")
 include(CPack)
 
