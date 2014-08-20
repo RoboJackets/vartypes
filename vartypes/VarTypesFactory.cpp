@@ -69,7 +69,7 @@ namespace VarTypes {
     } else {
       if (t >= VARTYPE_ID_MIN_USERTYPE) {
         VarPtr v = newUserVarType(t);
-        if (v==0) {
+        if (v==nullptr) {
           fprintf(stderr,"Error: failed to construct unknown user-defined VarType with VarTypeId: %d (type name: %s).\n",t,typeToString(t).c_str());
           fprintf(stderr,"Note, if you were trying to define your own VarType, you need to overload the newUserVarType(...) function from the VarTypesFactory class.\n");
         }

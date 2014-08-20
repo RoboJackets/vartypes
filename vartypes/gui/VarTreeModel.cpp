@@ -76,7 +76,7 @@ namespace VarTypes {
   
   QList<VarItem *> VarTreeModel::findItems(const VarPtr item) const {
     QList<VarItem *> result;
-    if (item!=0) VarItem::searchTree(invisibleRootItem(), item, result);
+    if (item!=nullptr) VarItem::searchTree(invisibleRootItem(), item, result);
     return result;
   }
   

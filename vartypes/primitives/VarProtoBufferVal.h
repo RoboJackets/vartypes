@@ -50,9 +50,9 @@ namespace VarTypes {
   
   public:
 
-    VarProtoBufferVal(CLASS_VARVAL_TYPE * default_val=0) : VarVal()
+    VarProtoBufferVal(CLASS_VARVAL_TYPE * default_val=nullptr) : VarVal()
     {
-      if (default_val==0) {
+      if (default_val==nullptr) {
         default_val = new CLASS_VARVAL_TYPE();
       }
       set(default_val);
@@ -60,7 +60,7 @@ namespace VarTypes {
     }
   
     virtual ~VarProtoBufferVal() {
-      if (_val!=0) delete _val;
+      if (_val!=nullptr) delete _val;
     }
   
     virtual void printdebug() const
@@ -74,7 +74,7 @@ namespace VarTypes {
     virtual void getSerialString(string & val) const {
       lock();
       string temp;
-      if (_val!=0) {
+      if (_val!=nullptr) {
         _val->SerializeToString(&temp);
       }
       VarBase64::getTool()->encode(temp, val,1);
@@ -84,7 +84,7 @@ namespace VarTypes {
     virtual void setSerialString(const string & val) {
       lock();
       string temp;
-      if (_val!=0) {
+      if (_val!=nullptr) {
         VarBase64::getTool()->decode(val,temp);
         _val->ParseFromString(temp);
       }
@@ -94,7 +94,7 @@ namespace VarTypes {
 
     virtual void getBinarySerialString(string & val) const {
       lock();
-      if (_val!=0) _val->SerializeToString(&val);
+      if (_val!=nullptr) _val->SerializeToString(&val);
       unlock();
     }
   

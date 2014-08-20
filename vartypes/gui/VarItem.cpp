@@ -32,7 +32,7 @@ namespace VarTypes {
   void VarItem::changeUpdate() {
     update(dt,opts,colflags);
     vector<VarPtr> vd;
-    if (dt!=0) {
+    if (dt!=nullptr) {
       //update tree structure if it's a list item.
       if (areColFlagsSet(colflags,GUI_COLUMN_FLAG_TREE_NODE)) {
         if (dt->getType()==VARTYPE_ID_LIST || dt->getType()==VARTYPE_ID_EXTERNAL) {
@@ -52,14 +52,14 @@ namespace VarTypes {
     opts=_opts;
     colflags=myflags;
     setEditable(areColFlagsSet( colflags,GUI_COLUMN_FLAG_EDITABLE) && (_dt->getType() != VARTYPE_ID_LIST && _dt->getType() != VARTYPE_ID_EXTERNAL ));
-    if (_dt!=dt && _dt!=0) {
-      if (dt != 0) {
+    if (_dt!=dt && _dt!=nullptr) {
+      if (dt != nullptr) {
         disconnect(dt.get(),SIGNAL(hasChanged(VarPtr)),this,SLOT(changeUpdate()));
       }
       connect(_dt.get(),SIGNAL(hasChanged(VarPtr)),this,SLOT(changeUpdate()));
       dt=_dt;
     }
-    if (dt!=0) {
+    if (dt!=nullptr) {
     setEnabled(! dt->areFlagsSet(VARTYPE_FLAG_READONLY));
       if (areColFlagsSet(colflags,GUI_COLUMN_FLAG_TREE_NODE)) {
         setText(QString::fromStdString(dt->getName()));
@@ -99,7 +99,7 @@ namespace VarTypes {
     vector<VarPtr> child_list;
     for (unsigned int i=0;i<children.size();i++) {
       VarPtr d = children[i];
-      if (d!=0 && d->areFlagsSet(VARTYPE_FLAG_HIDDEN)==false) {
+      if (d!=nullptr && d->areFlagsSet(VARTYPE_FLAG_HIDDEN)==false) {
         child_list.push_back(d);
       }
     }

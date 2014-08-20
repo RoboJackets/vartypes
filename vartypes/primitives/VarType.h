@@ -45,7 +45,7 @@
   #endif
 
 //Would use QSharedPointer instead of the tr1/boost versions, but enable_shared_from_this is not yet implemented in Qt which is a functionality that we need as we have vartypes generating events with pointers to themselves.
-#ifdef _WIN32
+#if defined(_WIN32) || defined(__APPLE__)
 #include <memory>
 using std::shared_ptr;
 using std::enable_shared_from_this;

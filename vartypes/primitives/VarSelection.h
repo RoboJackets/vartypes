@@ -222,7 +222,7 @@ namespace VarTypes {
       int in=listwidget->count();
       for (int i=0;i<in;i++) {
         QListWidgetItem * item = listwidget->item(i);
-        if (item!=0) {
+        if (item!=nullptr) {
           changed = changed | (setSelected(i,item->checkState()==Qt::Checked));
         }
       }

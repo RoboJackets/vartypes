@@ -108,7 +108,7 @@ namespace VarTypes {
       lock();
       int n = list.size();
       for (int i = 0; i < n ; i++) {
-        if (list[i]!=0) {
+        if (list[i]!=nullptr) {
           list[i]->deleteAllChildren();
         }
       }
@@ -130,7 +130,7 @@ namespace VarTypes {
     /// However, if the child *is* found then other will be *deleted* and the child will be returned!
     VarPtr findChildOrReplace(VarPtr other) {
       VarPtr data = findChild(other->getName());
-      if (data.get()!=0) {
+      if (data.get()!=nullptr) {
         return data;
       } else {
         addChild(other);
@@ -144,7 +144,7 @@ namespace VarTypes {
     template <class VCLASSPTR> 
     VCLASSPTR findChildOrReplace(VCLASSPTR other) {
       VCLASSPTR data = (VCLASSPTR)findChild(other->getName());
-      if (data.get()!=0) {
+      if (data.get()!=nullptr) {
         return data;
       } else {
         addChild(other);

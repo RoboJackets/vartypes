@@ -126,14 +126,14 @@ namespace VarTypes {
   void VarNotifier::addRecursive(VarPtr item, VarNotificationType notification_type, bool include_root) {
     mutex.lock();
     QQueue<VarType *> queue;
-    if (item.get()!=0) queue.enqueue(item.get());
+    if (item.get()!=nullptr) queue.enqueue(item.get());
     while(queue.isEmpty()==false) {
       VarType * d = queue.dequeue();
       if ((d!=item.get()) || include_root) internalNonMutexedAddItem(d,notification_type);
       vector<VarPtr> children = d->getChildren();
       int s=children.size();
       for (int i=0;i<s;i++) {
-        if (children[i].get()!=0) queue.enqueue(children[i].get());
+        if (children[i].get()!=nullptr) queue.enqueue(children[i].get());
       }
     }
     mutex.unlock();
@@ -148,14 +148,14 @@ namespace VarTypes {
   void VarNotifier::removeRecursive(VarPtr item, bool include_root) {
     mutex.lock();
     QQueue<VarType *> queue;
-    if (item.get()!=0) queue.enqueue(item.get());
+    if (item.get()!=nullptr) queue.enqueue(item.get());
     while(queue.isEmpty()==false) {
       VarType * d = queue.dequeue();
       if ((d!=item.get()) || include_root) internalNonMutexedRemoveItem(item.get());
       vector<VarPtr> children = d->getChildren();
       int s=children.size();
       for (int i=0;i<s;i++) {
-        if (children[i].get()!=0) queue.enqueue(children[i].get());
+        if (children[i].get()!=nullptr) queue.enqueue(children[i].get());
       }
     }
     mutex.unlock();

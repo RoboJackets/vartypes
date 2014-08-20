@@ -67,7 +67,7 @@ namespace VarTypes {
     }
   
     virtual ~VarQWidget() {
-      if (_val!=0) delete _val;
+      if (_val!=nullptr) delete _val;
     }
   
     virtual void resetToDefault()
@@ -95,7 +95,7 @@ namespace VarTypes {
       (void)parent;
       (void)option;
       QWidget * w=getQWidget();
-      if (w!=0) w->setParent(parent);
+      if (w!=nullptr) w->setParent(parent);
       return w;
     };
     virtual void setEditorData(const VarItemDelegate * delegate, QWidget *editor) const {

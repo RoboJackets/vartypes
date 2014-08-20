@@ -35,11 +35,11 @@ namespace VarTypes {
   void VarItemDelegate::paint ( QPainter * painter, const QStyleOptionViewItem & option, const QModelIndex & index ) const {
   
   
-    if (index.isValid() && index.model()!=0) {
+    if (index.isValid() && index.model()!=nullptr) {
       VarItem * item=(VarItem*)(((VarTreeModel*)index.model())->itemFromIndex (index));
-      if (item!=0) {
+      if (item!=nullptr) {
         VarPtr dt=item->getVarType();
-        if (dt!=0) {
+        if (dt!=nullptr) {
           /*if ((dt->getFlags() & VARTYPE_FLAG_PERSISTENT) != 0x00) {
             //there's a persistent editor on top!
             //don't draw anything!
@@ -61,7 +61,7 @@ namespace VarTypes {
     (void)index;
     //  QItemDelegate::drawBackground(painter,option,index);
   
-    if (dt!=0) {
+    if (dt!=nullptr) {
       if (dt->getType() != VARTYPE_ID_BOOL && dt->hasValue() && dt->hasMinValue() && dt->hasMaxValue()) {
         painter->save();  
     
@@ -115,11 +115,11 @@ namespace VarTypes {
   QWidget * VarItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option,
                           const QModelIndex &index) const {
     (void)option;
-    if (index.isValid() && index.model()!=0) {
+    if (index.isValid() && index.model()!=nullptr) {
       VarItem * item=(VarItem*)(((VarTreeModel*)index.model())->itemFromIndex (index));
-          if (item!=0) {
+          if (item!=nullptr) {
         VarPtr dt=item->getVarType();
-        if (dt!=0) {
+        if (dt!=nullptr) {
           QWidget * w;
           w=dt->createEditor(this,parent,option);
           //if ((dt->getFlags() & VARTYPE_FLAG_PERSISTENT) != 0x00) w->setFocusPolicy(Qt::NoFocus);
@@ -131,14 +131,14 @@ namespace VarTypes {
   }
   
   void VarItemDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const {
-    if (editor==0) return;
-    if (index.isValid() && index.model()!=0) {
+    if (editor==nullptr) return;
+    if (index.isValid() && index.model()!=nullptr) {
       VarItem * item=(VarItem*)(((VarTreeModel*)index.model())->itemFromIndex (index));
-      if (item!=0) {
+      if (item!=nullptr) {
         VarPtr dt=item->getVarType();
-        if (dt!=0) {
+        if (dt!=nullptr) {
           //printf("Setting Editor for: %s\n",dt->getName().c_str());
-          if (editor!=0 && ((dt->getFlags() & VARTYPE_FLAG_READONLY) != 0x00)) {
+          if (editor!=nullptr && ((dt->getFlags() & VARTYPE_FLAG_READONLY) != 0x00)) {
             editor->setEnabled(false);
           } else {
             editor->setEnabled(true);
@@ -154,14 +154,14 @@ namespace VarTypes {
   
   QSize VarItemDelegate::sizeHint ( const QStyleOptionViewItem & option, const QModelIndex & index ) const {
   
-    if (index.isValid() && index.model()!=0) {
+    if (index.isValid() && index.model()!=nullptr) {
       if ((index.row() >= 0) && (index.column() >= 0)) {
         QStandardItem *parent = static_cast<QStandardItem*>(index.internalPointer());
-        if (parent != 0) {
+        if (parent != nullptr) {
           QStandardItem *item = parent->child(index.row(), index.column());
-          if (item!=0) {
+          if (item!=nullptr) {
             VarPtr dt=((VarItem*)item)->getVarType();
-            if (dt!=0) {
+            if (dt!=nullptr) {
               return dt->sizeHint(this,option,index);
             }
           }
@@ -174,12 +174,12 @@ namespace VarTypes {
   
   void VarItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
                       const QModelIndex &index) const {
-    if (editor==0) return;
-    if (index.isValid() && model!=0) {
+    if (editor==nullptr) return;
+    if (index.isValid() && model!=nullptr) {
       VarItem * item=(VarItem*)(((VarTreeModel*)model)->itemFromIndex (index));
-      if (item!=0) {
+      if (item!=nullptr) {
         VarPtr dt=item->getVarType();
-        if (dt!=0) {
+        if (dt!=nullptr) {
           dt->setModelData(this,editor);
           return;
         }
