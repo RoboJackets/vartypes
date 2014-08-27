@@ -21,6 +21,10 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 find_package(Qt5Widgets REQUIRED)
 
 
+# C++11
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11"}
+
+
 set(SRCS
   ${src_dir}/vartypes/VarBase64.cpp
   ${src_dir}/vartypes/VarNotifier.cpp
